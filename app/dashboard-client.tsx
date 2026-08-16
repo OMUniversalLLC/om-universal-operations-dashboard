@@ -295,9 +295,10 @@ export default function DashboardClient() {
   useEffect(() => {
     let active = true;
     const load = async () => {
-      const fallbackResponse = await fetch("/dashboard-data.json", { cache: "no-store" });
+      const fallbackUrl = new URL("dashboard-data.json", document.baseURI).toString();
+      const fallbackResponse = await fetch(fallbackUrl, { cache: "no-store" });
       const fallback = (await fallbackResponse.json()) as DashboardData;
-      const endpoint = process.env.NEXT_PUBLIC_DASHBOARD_DATA_URL;
+      const endpoint = document.querySelector<HTMLMetaElement>('meta[name="dashboard-data-url"]')?.content || "";
       if (!endpoint) { if (active) setData(fallback); return; }
       try {
         const response = await fetch(endpoint, { headers: { Accept: "application/json" }, cache: "no-store" });
