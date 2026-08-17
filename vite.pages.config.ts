@@ -9,5 +9,14 @@ export default defineConfig({
   build: {
     outDir: "../dist-pages",
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        format: "iife",
+        name: "OMUniversalDashboard",
+        inlineDynamicImports: true,
+        entryFileNames: "assets/dashboard.js",
+        assetFileNames: (assetInfo) => assetInfo.name?.endsWith(".css") ? "assets/dashboard.css" : "assets/[name][extname]",
+      },
+    },
   },
 });

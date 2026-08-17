@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import DashboardClient from "../app/dashboard-client";
+import DashboardApp from "../app/dashboard-app";
 import "../app/globals.css";
 
 const root = document.getElementById("root");
@@ -11,6 +11,6 @@ if (!root) {
 
 createRoot(root).render(
   <StrictMode>
-    <DashboardClient />
+    <DashboardApp />
   </StrictMode>,
 );

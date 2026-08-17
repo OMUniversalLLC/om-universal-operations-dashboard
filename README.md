@@ -1,6 +1,6 @@
 # OM Universal Operations Dashboard
 
-Professional management reporting for OM Universal, focused on:
+Private management reporting for OM Universal, focused on:
 
 - sales reporting for Plant City, Inverness and Vape Store;
 - Quick C daily sales, cost and margin summaries;
@@ -9,47 +9,52 @@ Professional management reporting for OM Universal, focused on:
 
 Inventory and audit modules are intentionally outside this project.
 
-## Live websites
+## Secure access design
 
-- GitHub Pages: `https://omuniversalllc.github.io/om-universal-operations-dashboard/`
-- Private management deployment: `https://sales-mercury-operations.asrsn-cse.chatgpt.site`
+The public GitHub Pages address is only the login entrance. It contains no business-report JSON.
+
+1. Google securely signs in the visitor.
+2. The Apps Script gateway verifies Google's identity token.
+3. The gateway checks the email, role, store access and `Active` value in the private `Users` tab.
+4. Only approved visitors receive live calculated report values from the private management Sheet.
+
+Passwords are never stored in Google Sheets or this repository.
+
+## Live addresses
+
+- GitHub Pages login: `https://omuniversalllc.github.io/om-universal-operations-dashboard/`
+- Management Google Sheet: `https://docs.google.com/spreadsheets/d/1Jpz7Oydr8VbZ-9-HPwL3_K_dIINiN3m_HORQieE8iGc/edit`
+
+The Apps Script web-app address is added to `public/auth-config.json` during one-time activation.
 
 ## Data flow
 
-The dashboard currently ships with the verified reporting snapshot in
-`public/dashboard-data.json`. The Google Sheet remains the formula source and its
-`Website_Export` tab is the approved layer for a future authenticated JSON
-endpoint. Raw source tabs should not be published.
+The private management Sheet remains the formula source. Apps Script reads the calculated values from `Sales_Data`, `QuickC_Summary`, `Mercury_Tasks`, `Support_Expenses` and `Website_Export` only after authentication. It returns management-ready summaries and applies the user's configured store access.
 
-## Local development
+The protected `Users` tab uses these columns:
 
-Requirements: Node.js 22 or newer and pnpm 10.
+- Email / User ID
+- Name
+- Role: Admin, Manager or Viewer
+- Store Access
+- Active: Yes or No
+- Notes
+
+## One-time Google activation
+
+Follow `google-apps-script/README.md`. Activation requires a Google OAuth web client ID and one Apps Script web-app deployment. Both services have free usage suitable for a small internal team.
+
+## Local development and validation
 
 ```bash
 pnpm install
 pnpm run dev:pages
-```
-
-The local GitHub Pages preview uses the repository-aware static build.
-
-## Validation builds
-
-```bash
 pnpm run build:pages
-pnpm run build
+pnpm run test
 ```
 
-- `build:pages` creates the static site in `dist-pages/` for GitHub Pages.
-- `build` validates the private vinext/Sites deployment.
+The GitHub Pages build emits fixed `assets/dashboard.js` and `assets/dashboard.css` files so the authenticated Apps Script page can reuse the same reviewed interface.
 
-## GitHub Pages deployment
+## Privacy note
 
-`.github/workflows/deploy-pages.yml` automatically rebuilds and deploys the
-static dashboard after changes reach `main`. The workflow can also be run
-manually from the repository's Actions tab.
-
-## Privacy
-
-The repository is private, but GitHub Pages visibility depends on the
-organization's GitHub plan and Pages settings. Confirm the intended access level
-before placing detailed or sensitive business data in `public/`.
+Removing report files from the current branch does not erase copies from older public Git history. Before using sensitive live data, purge the earlier report snapshot from repository history or move the clean frontend into a new public repository and make the old repository private.
