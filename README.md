@@ -1,6 +1,6 @@
 # OM Universal Operations Dashboard
 
-Private management reporting for OM Universal, focused on:
+Management reporting for OM Universal, focused on:
 
 - sales reporting for Plant City, Inverness and Vape Store;
 - Quick C daily sales, cost and margin summaries;
@@ -9,27 +9,24 @@ Private management reporting for OM Universal, focused on:
 
 Inventory and audit modules are intentionally outside this project.
 
-## Secure access design
+## Current access mode
 
-The public GitHub Pages address is only the login entrance. It contains no business-report JSON.
+The GitHub Pages dashboard is temporarily open and does not require sign-in. It displays the approved report snapshot bundled with the website.
 
-1. Google securely signs in the visitor.
-2. The Apps Script gateway verifies Google's identity token.
-3. The gateway checks the email, role, store access and `Active` value in the private `Users` tab.
-4. Only approved visitors receive live calculated report values from the private management Sheet.
+The source Google Sheet remains private. The Google Sign-In, Apps Script gateway and protected `Users` tab remain available in the repository for later reactivation.
 
-Passwords are never stored in Google Sheets or this repository.
+No passwords are stored in Google Sheets or this repository.
 
 ## Live addresses
 
-- GitHub Pages login: `https://omuniversalllc.github.io/om-universal-operations-dashboard/`
+- Open GitHub Pages dashboard: `https://omuniversalllc.github.io/om-universal-operations-dashboard/`
 - Management Google Sheet: `https://docs.google.com/spreadsheets/d/1Jpz7Oydr8VbZ-9-HPwL3_K_dIINiN3m_HORQieE8iGc/edit`
-
-The Apps Script web-app address is added to `public/auth-config.json` during one-time activation.
 
 ## Data flow
 
-The private management Sheet remains the formula source. Apps Script reads the calculated values from `Sales_Data`, `QuickC_Summary`, `Mercury_Tasks`, `Support_Expenses` and `Website_Export` only after authentication. It returns management-ready summaries and applies the user's configured store access.
+The private management Sheet remains the formula source. The current public website displays the reviewed snapshot in `app/public-dashboard-data.json`; it does not read the private Sheet directly. To refresh the public dashboard, generate and publish a new approved snapshot.
+
+When secure access is reactivated, Apps Script can read calculated values from `Sales_Data`, `QuickC_Summary`, `Mercury_Tasks`, `Support_Expenses` and `Website_Export`, then apply the user's configured store access.
 
 The protected `Users` tab uses these columns:
 
@@ -40,7 +37,7 @@ The protected `Users` tab uses these columns:
 - Active: Yes or No
 - Notes
 
-## One-time Google activation
+## Optional secure access
 
 Follow `google-apps-script/README.md`. Activation requires a Google OAuth web client ID and one Apps Script web-app deployment. Both services have free usage suitable for a small internal team.
 
@@ -53,8 +50,8 @@ pnpm run build:pages
 pnpm run test
 ```
 
-The GitHub Pages build emits fixed `assets/dashboard.js` and `assets/dashboard.css` files so the authenticated Apps Script page can reuse the same reviewed interface.
+The GitHub Pages build emits a fixed `assets/dashboard.js` file. The same interface can be reused by the authenticated Apps Script page when secure access is reactivated.
 
 ## Privacy note
 
-Removing report files from the current branch does not erase copies from older public Git history. Before using sensitive live data, purge the earlier report snapshot from repository history or move the clean frontend into a new public repository and make the old repository private.
+The current website is public. Treat every value in `app/public-dashboard-data.json` as internet-visible and never add passwords, raw credentials, detailed task descriptions or other sensitive records. Removing a snapshot later does not erase it from older Git history.
