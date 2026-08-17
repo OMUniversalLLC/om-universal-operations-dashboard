@@ -28,8 +28,8 @@ export const metadata: Metadata = {
     images: ["/social-preview.png"],
   },
   icons: {
-    icon: "/favicon.svg",
-    shortcut: "/favicon.svg",
+    icon: "/favicon.svg?v=om-universal-1",
+    shortcut: "/favicon.svg?v=om-universal-1",
   },
 };
 
