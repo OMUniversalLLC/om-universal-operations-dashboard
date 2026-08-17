@@ -16,28 +16,31 @@ async function render() {
   );
 }
 
-test("server-renders the protected Google sign-in page", async () => {
+test("server-renders the open dashboard without a login gate", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /Secure company access/i);
-  assert.match(html, /approved Google account/i);
-  assert.match(html, /No password sheet/i);
-  assert.doesNotMatch(html, /dashboard-data\.json/i);
+  assert.match(html, /Executive overview/i);
+  assert.match(html, /Public snapshot/i);
+  assert.match(html, /Open dashboard mode/i);
+  assert.doesNotMatch(html, /Secure company access/i);
 });
-test("keeps report data out of the public website build", async () => {
+test("publishes the approved report snapshot without exposing a separate JSON endpoint", async () => {
   await assert.rejects(access(new URL("public/dashboard-data.json", root)));
   await assert.rejects(access(new URL("dashboard-data.json", root)));
 
-  const [client, gateway, config] = await Promise.all([
-    readFile(new URL("app/dashboard-client.tsx", root), "utf8"),
+  const [app, snapshot, gateway, config] = await Promise.all([
+    readFile(new URL("app/dashboard-app.tsx", root), "utf8"),
+    readFile(new URL("app/public-dashboard-data.json", root), "utf8"),
     readFile(new URL("google-apps-script/Code.gs", root), "utf8"),
     readFile(new URL("public/auth-config.json", root), "utf8"),
   ]);
 
-  assert.doesNotMatch(client, /fetch\([^)]*dashboard-data\.json/i);
+  assert.match(app, /public-dashboard-data\.json/i);
+  assert.doesNotMatch(app, /<LoginPage/i);
+  assert.equal(JSON.parse(snapshot).dailyRecords.length, 66);
   assert.match(gateway, /verifyGoogleCredential_/);
   assert.match(gateway, /findApprovedUser_/);
   assert.match(gateway, /GOOGLE_CLIENT_ID/);
