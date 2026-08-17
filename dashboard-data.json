@@ -1,0 +1,195 @@
+{
+  "source": "uploaded-snapshot",
+  "asOf": "2026-08-17",
+  "modelStatus": "FAIL",
+  "quickC": {
+    "period": "Aug 1–15, 2026",
+    "sales": 46291.06,
+    "cogs": 26189.949999999997,
+    "salesMargin": 0.4342330894993548,
+    "groceryPurchase": 30041.050000000003,
+    "differenceMargin": 0.35103992001911377,
+    "daily": [
+      {
+        "date": "2026-08-01",
+        "sales": 3723.38,
+        "scanned_cost": 2135.03,
+        "modifier_cost": 70.72,
+        "grocery_purchase": 170.57,
+        "source_row": 9,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-02",
+        "sales": 2685,
+        "scanned_cost": 1443.25,
+        "modifier_cost": 74.64,
+        "grocery_purchase": null,
+        "source_row": 10,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-03",
+        "sales": 2720.97,
+        "scanned_cost": 1429.7,
+        "modifier_cost": 77.01,
+        "grocery_purchase": 472.66,
+        "source_row": 11,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-04",
+        "sales": 2475.03,
+        "scanned_cost": 1313.05,
+        "modifier_cost": 54.11,
+        "grocery_purchase": 2428.46,
+        "source_row": 12,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-05",
+        "sales": 2706.91,
+        "scanned_cost": 1421.41,
+        "modifier_cost": 107.13,
+        "grocery_purchase": 3597.73,
+        "source_row": 13,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-06",
+        "sales": 3027.63,
+        "scanned_cost": 1499.76,
+        "modifier_cost": 115.24,
+        "grocery_purchase": 5320.02,
+        "source_row": 14,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-07",
+        "sales": 3726.79,
+        "scanned_cost": 2049.16,
+        "modifier_cost": 75.09,
+        "grocery_purchase": 3432.57,
+        "source_row": 15,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-08",
+        "sales": 3817.78,
+        "scanned_cost": 2094.96,
+        "modifier_cost": 93.47,
+        "grocery_purchase": 226.7,
+        "source_row": 16,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-09",
+        "sales": 3043.77,
+        "scanned_cost": 1687.3,
+        "modifier_cost": 77.47,
+        "grocery_purchase": null,
+        "source_row": 17,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-10",
+        "sales": 2998.25,
+        "scanned_cost": 1585.26,
+        "modifier_cost": 68.91,
+        "grocery_purchase": 783.01,
+        "source_row": 18,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-11",
+        "sales": 2806.45,
+        "scanned_cost": 1472.36,
+        "modifier_cost": 92.5,
+        "grocery_purchase": 4277.15,
+        "source_row": 19,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-12",
+        "sales": 3173.64,
+        "scanned_cost": 1721.43,
+        "modifier_cost": 71.97,
+        "grocery_purchase": 2384.84,
+        "source_row": 20,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-13",
+        "sales": 2276.77,
+        "scanned_cost": 1227.56,
+        "modifier_cost": 83.35,
+        "grocery_purchase": 831.38,
+        "source_row": 21,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-14",
+        "sales": 3556.36,
+        "scanned_cost": 1945.58,
+        "modifier_cost": 71.73,
+        "grocery_purchase": 5912.64,
+        "source_row": 22,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      },
+      {
+        "date": "2026-08-15",
+        "sales": 3552.33,
+        "scanned_cost": 1922.01,
+        "modifier_cost": 108.79,
+        "grocery_purchase": 203.32,
+        "source_row": 23,
+        "source_file": "Quickc Summary Reports 2026.xlsx - Aug 2026.csv"
+      }
+    ]
+  },
+  "stores": [
+    {
+      "store": "Plant City",
+      "period": "Jan 2026",
+      "latestDate": "2026-01-31",
+      "latestSales": 3754.01,
+      "periodSales": 113777.77,
+      "customers": 409,
+      "predicted": 113777.77,
+      "dataStatus": "Ready"
+    },
+    {
+      "store": "Inverness",
+      "period": "Aug 1–15, 2026",
+      "latestDate": "2026-08-15",
+      "latestSales": 584.51,
+      "periodSales": 7634.84,
+      "customers": 156,
+      "predicted": 15778.66,
+      "dataStatus": "Ready"
+    },
+    {
+      "store": "Vape Store",
+      "period": "May 10–31, 2026",
+      "latestDate": "2026-05-31",
+      "latestSales": 203.42,
+      "periodSales": 6673.16,
+      "customers": 8,
+      "predicted": 6673.16,
+      "dataStatus": "Source dates need review"
+    }
+  ],
+  "mercury": {
+    "total": 72,
+    "completed": 54,
+    "inProgress": 16,
+    "waiting": 2,
+    "statusConflicts": 10
+  },
+  "alerts": [
+    "Store periods differ; combined comparison is disabled.",
+    "Quick C Summary requires a Store / Location field.",
+    "Vape Store has duplicate and missing current-report dates.",
+    "Mercury task statuses and completion dates need reconciliation."
+  ]
+}
