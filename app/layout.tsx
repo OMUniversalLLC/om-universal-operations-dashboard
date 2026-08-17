@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Sales & Mercury Operations | Management Portal",
-  description: "Private management reporting for three-store sales and Mercury team task delivery.",
+  description: "Three-store sales reporting and Mercury team status monitoring with public-safe management summaries.",
   openGraph: {
     title: "Sales & Mercury Operations",
     description: "Store performance and Mercury team delivery in one management view.",
