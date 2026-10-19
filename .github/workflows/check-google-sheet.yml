@@ -1,0 +1,76 @@
+name: Check Google Sheet connection
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-sheet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Install Google authentication libraries
+        run: python3 -m pip install --disable-pip-version-check google-auth requests
+
+      - name: Verify credential and read spreadsheet metadata
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GOOGLE_SHEET_ID: 1Jpz7Oydr8VbZ-9-HPwL3_K_dIINiN3m_HORQieE8iGc
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+          from google.oauth2 import service_account
+          from google.auth.transport.requests import AuthorizedSession
+
+          raw = os.environ.get('GOOGLE_SERVICE_ACCOUNT_JSON', '')
+          if not raw:
+              sys.exit('Missing GOOGLE_SERVICE_ACCOUNT_JSON repository secret.')
+          try:
+              info = json.loads(raw)
+          except json.JSONDecodeError:
+              sys.exit('The secret is not valid JSON. Save the complete downloaded JSON contents, not a filename.')
+          required = ('client_email', 'private_key', 'token_uri')
+          if info.get('type') != 'service_account' or any(not info.get(k) for k in required):
+              sys.exit('The secret is not a complete Google service account credential.')
+          if info.get('token_uri') != 'https://oauth2.googleapis.com/token':
+              sys.exit('Unexpected token endpoint. Use the original Google-downloaded credential.')
+          if info['client_email'] != 'om-sheet-updater@om-universal-automation.iam.gserviceaccount.com':
+              sys.exit('Credential belongs to a different service account. Check the downloaded key.')
+          try:
+              credentials = service_account.Credentials.from_service_account_info(
+                  info, scopes=['https://www.googleapis.com/auth/spreadsheets.readonly'])
+              session = AuthorizedSession(credentials)
+              endpoint = 'https://sheets.googleapis.com/v4/spreadsheets/' + os.environ['GOOGLE_SHEET_ID']
+              response = session.get(endpoint, params={
+                  'fields': 'properties(title),sheets(properties(title,sheetId))'
+              }, timeout=45)
+              if response.status_code == 403:
+                  sys.exit('Google denied access. Check that Sheets API is enabled and the sheet is shared with the service account.')
+              if response.status_code == 404:
+                  sys.exit('Spreadsheet not found or not shared with this service account.')
+              if not response.ok:
+                  sys.exit('Google Sheets request failed with HTTP ' + str(response.status_code) + '.')
+              payload = response.json()
+          except SystemExit:
+              raise
+          except Exception as exc:
+              sys.exit('Authentication or connection failed (' + type(exc).__name__ + '). No cells were changed.')
+          titles = {s['properties']['title'] for s in payload.get('sheets', [])}
+          required_tabs = {'Sales_Data', 'QuickC_Summary', 'Website_Export'}
+          missing = sorted(required_tabs - titles)
+          print('Google Sheets authentication succeeded.')
+          print('Spreadsheet metadata read successfully. No cell data was read or changed.')
+          print('Worksheet count:', len(titles))
+          if missing:
+              sys.exit('Required tabs missing: ' + ', '.join(missing))
+          print('Sales_Data, QuickC_Summary and Website_Export tabs verified.')
+          summary = os.environ.get('GITHUB_STEP_SUMMARY')
+          if summary:
+              with open(summary, 'a', encoding='utf-8') as f:
+                  f.write('### Google Sheet connection verified\n\n')
+                  f.write('Service-account authentication and required worksheet names passed. ')
+                  f.write('This check was read-only. Daily imports and website publishing are not enabled by this test.\n')
+          PY
+
