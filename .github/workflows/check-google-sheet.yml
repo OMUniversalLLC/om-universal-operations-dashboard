@@ -73,4 +73,3 @@ jobs:
                   f.write('Service-account authentication and required worksheet names passed. ')
                   f.write('This check was read-only. Daily imports and website publishing are not enabled by this test.\n')
           PY
-
